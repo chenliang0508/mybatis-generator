@@ -18,10 +18,14 @@ package org.mybatis.generator.plugins;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @description:
@@ -29,6 +33,14 @@ import java.util.List;
  * @create 2024-07-02
  **/
 public class LombokPlugin extends PluginAdapter {
+    private boolean suppressJavaInterface;
+
+    @Override
+    public void setProperties(Properties properties) {
+        super.setProperties(properties);
+        suppressJavaInterface = Boolean.valueOf(properties.getProperty("suppressJavaInterface")); //$NON-NLS-1$
+    }
+
     @Override
     public boolean validate(List<String> list) {
         return true;
@@ -46,11 +58,27 @@ public class LombokPlugin extends PluginAdapter {
 
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        addLombok(topLevelClass, introspectedTable);
+        return true;
+    }
+
+    @Override
+    public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        addLombok(topLevelClass, introspectedTable);
+        return true;
+    }
+
+    @Override
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        addLombok(topLevelClass, introspectedTable);
+        return true;
+    }
+
+    private void addLombok(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         topLevelClass.addImportedType("lombok.Data");
         topLevelClass.addImportedType("lombok.experimental.Accessors");
         topLevelClass.addAnnotation("@Data");
         topLevelClass.addAnnotation("@Accessors(chain = true)");
-        return true;
     }
 
 

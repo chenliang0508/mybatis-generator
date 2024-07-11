@@ -150,7 +150,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
     }
     protected void addInsertBatchMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateInsert()) {
+        if (introspectedTable.getRules().generateBatchInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new InsertBatchMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
