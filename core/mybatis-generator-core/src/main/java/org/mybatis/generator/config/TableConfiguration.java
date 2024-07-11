@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,6 +40,8 @@ public class TableConfiguration extends PropertyHolder {
     
     /** The insert statement enabled. */
     private boolean insertStatementEnabled;
+    private boolean insertBatchStatementEnabled;
+    private boolean insertOrUpdateBatchStatementEnabled;
 
     /** The select by primary key statement enabled. */
     private boolean selectByPrimaryKeyStatementEnabled;
@@ -176,6 +178,24 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setInsertStatementEnabled(boolean insertStatementEnabled) {
         this.insertStatementEnabled = insertStatementEnabled;
+    }
+
+    public boolean isInsertBatchStatementEnabled() {
+        return insertBatchStatementEnabled;
+    }
+
+    public TableConfiguration setInsertBatchStatementEnabled(boolean insertBatchStatementEnabled) {
+        this.insertBatchStatementEnabled = insertBatchStatementEnabled;
+        return this;
+    }
+
+    public boolean isInsertOrUpdateBatchStatementEnabled() {
+        return insertOrUpdateBatchStatementEnabled;
+    }
+
+    public TableConfiguration setInsertOrUpdateBatchStatementEnabled(boolean insertOrUpdateBatchStatementEnabled) {
+        this.insertOrUpdateBatchStatementEnabled = insertOrUpdateBatchStatementEnabled;
+        return this;
     }
 
     /**
@@ -422,7 +442,9 @@ public class TableConfiguration extends PropertyHolder {
                 || deleteByExampleStatementEnabled
                 || deleteByPrimaryKeyStatementEnabled
                 || countByExampleStatementEnabled
-                || updateByExampleStatementEnabled;
+                || updateByExampleStatementEnabled
+                || insertBatchStatementEnabled
+                || insertOrUpdateBatchStatementEnabled;
     }
 
     /**

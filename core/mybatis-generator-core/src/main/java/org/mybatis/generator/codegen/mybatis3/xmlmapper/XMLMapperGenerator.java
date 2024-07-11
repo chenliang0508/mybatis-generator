@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,9 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CountByExampleE
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByExampleElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ExampleWhereClauseElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertBatchElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertOrUpdateElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertSelectiveElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
@@ -78,6 +80,9 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addDeleteByPrimaryKeyElement(answer);
         addDeleteByExampleElement(answer);
         addInsertElement(answer);
+        addBatchInsertElement(answer);
+        addInsertUpdateElement(answer);
+
         addInsertSelectiveElement(answer);
         addCountByExampleElement(answer);
         addUpdateByExampleSelectiveElement(answer);
@@ -175,6 +180,18 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addInsertElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+    protected void addBatchInsertElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateBatchInsert()) {
+            AbstractXmlElementGenerator elementGenerator = new InsertBatchElementGenerator(false);
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+    protected void addInsertUpdateElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateInsertUpdate()) {
+            AbstractXmlElementGenerator elementGenerator = new InsertOrUpdateElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

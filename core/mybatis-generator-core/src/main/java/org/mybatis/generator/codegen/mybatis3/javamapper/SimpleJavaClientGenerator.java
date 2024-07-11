@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertBatchMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectAllMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
@@ -82,6 +83,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         
         addDeleteByPrimaryKeyMethod(interfaze);
         addInsertMethod(interfaze);
+        addBatchInsertMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
         addSelectAllMethod(interfaze);
         addUpdateByPrimaryKeyMethod(interfaze);
@@ -110,6 +112,12 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(true);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+    protected void addBatchInsertMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateBatchInsert()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new InsertBatchMethodGenerator(true);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

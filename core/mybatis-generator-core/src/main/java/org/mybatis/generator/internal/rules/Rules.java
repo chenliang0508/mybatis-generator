@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,6 +35,8 @@ public interface Rules {
      * @return true if the element and method should be generated
      */
     boolean generateInsert();
+    boolean generateBatchInsert();
+    boolean generateInsertUpdate();
 
     /**
      * Implements the rule for generating the insert selective SQL Map element

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -94,6 +94,16 @@ public class RulesDelegate implements Rules {
 
     public boolean generateInsert() {
         return rules.generateInsert();
+    }
+
+    @Override
+    public boolean generateBatchInsert() {
+        return rules.generateBatchInsert();
+    }
+
+    @Override
+    public boolean generateInsertUpdate() {
+        return rules.generateBatchInsert();
     }
 
     public boolean generateInsertSelective() {

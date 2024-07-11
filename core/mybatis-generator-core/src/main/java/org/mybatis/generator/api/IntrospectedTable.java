@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2024 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -121,6 +121,8 @@ public abstract class IntrospectedTable {
         
         /** The attr insert statement id. */
         ATTR_INSERT_STATEMENT_ID,
+        ATTR_BATCH_INSERT_STATEMENT_ID,
+        ATTR_INSERT_UPDATE_STATEMENT_ID,
         
         /** The attr insert selective statement id. */
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
@@ -791,6 +793,9 @@ public abstract class IntrospectedTable {
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
+        setBatchInsertStatementId("batchInsert");
+        setInsertUpdateStatementId("insertOrUpdate");
+
         setSelectAllStatementId("selectAll"); //$NON-NLS-1$
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
@@ -1015,6 +1020,13 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_INSERT_STATEMENT_ID, s);
     }
 
+    public void setBatchInsertStatementId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_BATCH_INSERT_STATEMENT_ID, s);
+    }
+    public void setInsertUpdateStatementId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_INSERT_UPDATE_STATEMENT_ID, s);
+    }
+
     /**
      * Sets the delete by primary key statement id.
      *
@@ -1226,6 +1238,13 @@ public abstract class IntrospectedTable {
     public String getInsertStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_INSERT_STATEMENT_ID);
+    }
+
+    public String getBatchInsertStatementId() {
+        return internalAttributes.get(InternalAttribute.ATTR_BATCH_INSERT_STATEMENT_ID);
+    }
+    public String getInsertUpdateStatementId() {
+        return internalAttributes.get(InternalAttribute.ATTR_INSERT_UPDATE_STATEMENT_ID);
     }
 
     /**
