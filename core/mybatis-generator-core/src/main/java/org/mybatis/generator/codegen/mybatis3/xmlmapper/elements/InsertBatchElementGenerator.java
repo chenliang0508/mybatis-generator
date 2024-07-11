@@ -102,7 +102,9 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
                 valuesClause.append("      (");
             }
             IntrospectedColumn introspectedColumn = columns.get(i);
-
+            if ("UPDATE_TIME".equals(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn))) {
+                continue;
+            }
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append(MyBatis3FormattingUtilities

@@ -103,7 +103,9 @@ public class InsertOrUpdateElementGenerator extends AbstractXmlElementGenerator 
                 valuesClause.append("      (");
             }
             IntrospectedColumn introspectedColumn = columns.get(i);
-
+            if ("UPDATE_TIME".equals(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn))) {
+                continue;
+            }
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append(MyBatis3FormattingUtilities
@@ -143,9 +145,9 @@ public class InsertOrUpdateElementGenerator extends AbstractXmlElementGenerator 
         StringBuilder sb = new StringBuilder();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
-//            if ("CREATE_TIME".equals(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn))) {
-//                continue;
-//            }
+            if ("CREATE_TIME".equals(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn))) {
+                continue;
+            }
             sb.append(System.getProperty("line.separator"));
             sb.append("      ");
             sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
